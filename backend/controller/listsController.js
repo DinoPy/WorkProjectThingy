@@ -43,7 +43,7 @@ const addItem = asyncHandler(async (req, res) => {
 
   if (!content) {
     res.status(400);
-    throw new Error(`Please add an item}`);
+    throw new Error(`Please add an item`);
   }
   const listFound = await List.findById(req.params.id);
 

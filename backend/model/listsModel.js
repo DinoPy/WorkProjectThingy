@@ -5,7 +5,6 @@ const listsSchema = mongoose.Schema(
     name: {
       type: String,
       required: [true, "Please add a name"],
-      unique: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
