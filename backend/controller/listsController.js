@@ -1,5 +1,6 @@
 const List = require("../model/listsModel");
 const User = require("../model/userModel");
+const Item = require("../model/itemsModel");
 const asyncHandler = require("express-async-handler");
 const res = require("express/lib/response");
 const { find } = require("../model/listsModel");
@@ -10,7 +11,6 @@ const { find } = require("../model/listsModel");
 
 const getLists = asyncHandler(async (req, res) => {
   const listsFound = await List.find();
-
   res.status(200).json(listsFound);
 });
 
@@ -29,7 +29,6 @@ const createList = asyncHandler(async (req, res) => {
   const list = await List.create({
     name: name,
     user: req.user.id,
-    items: [],
   });
 
   res.status(200).json(list);
@@ -38,10 +37,11 @@ const createList = asyncHandler(async (req, res) => {
 /**
  *  Add item to the list found via the param. It goes on Root
  */
-const addItem = asyncHandler(async (req, res) => {
-  const { item } = req.body;
 
-  if (!item) {
+const addItem = asyncHandler(async (req, res) => {
+  const { content } = req.body;
+
+  if (!content) {
     res.status(400);
     throw new Error(`Please add an item}`);
   }
@@ -57,45 +57,103 @@ const addItem = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  await listFound.items.push(item);
-  await listFound.save();
-  console.log(listFound);
+  const newItem = await Item.create({
+    content: content,
+    user: req.user.id,
+    parentList: listFound._id,
+  });
 
+  await listFound.items.push(newItem);
+  await listFound.save();
   res.status(200).json(listFound);
 });
 
-const deleteItem = asyncHandler(async (req, res) => {
-  const listFound = await List.findById(req.params.id);
+/**
+ *   Delete an item
+ */
 
+const deleteItem = asyncHandler(async (req, res) => {
+  let listFound = await List.findById(req.params.id);
+  const itemFound = await Item.findById(req.params.itemId);
+
+  if (!itemFound) {
+    res.status(400);
+    throw new Error("No matching item found");
+  }
   if (!listFound) {
     res.status(400);
     throw new Error("No matching list found");
   }
 
-  listFound.items.splice(req.params.index, 1);
-  await listFound.save();
+  listFound.items = listFound.items.filter(
+    (item) => item._id.toString() !== req.params.itemId
+  );
 
-  res.status(200).json({ list: req.params.id, item: req.params.index });
+  await listFound.save();
+  await itemFound.remove();
+
+  res.status(200).json(itemFound);
 });
 
-const updateItem = asyncHandler(async (req, res) => {
-  const listFound = await List.findById(req.params.id);
-  const { item } = req.body;
+/**
+ *  Update an item
+ */
 
-  if (!item) {
+const updateItem = asyncHandler(async (req, res) => {
+  const itemFound = await Item.findById(req.params.itemId);
+  const { content } = req.body;
+
+  if (!content) {
     res.status(400);
     throw new Error("No new value was provided");
   }
 
+  if (!itemFound) {
+    res.status(400);
+    throw new Error("No matching list found");
+  }
+
+  itemFound.content = content;
+  await itemFound.save();
+
+  res.status(200).json(itemFound);
+});
+
+/**
+ *  Delete list
+ */
+
+const deleteList = asyncHandler(async (req, res) => {
+  const listFound = await List.findById(req.params.id);
+  const itemsFound = await Item.find({ parentList: req.params.id });
   if (!listFound) {
     res.status(400);
     throw new Error("No matching list found");
   }
 
-  listFound.items[req.params.index] = item;
-  await listFound.save();
-
+  await Item.deleteMany({ parentList: req.params.id });
+  await listFound.remove();
   res.status(200).json(listFound);
+});
+
+/**
+ *    Update List  -- Change name
+ */
+
+const updateList = asyncHandler(async (req, res) => {
+  const { name } = req.body;
+
+  if (!name) {
+    res.status(400);
+    throw new Error("Please add a new name");
+  }
+
+  const foundList = await List.findById(req.params.id);
+
+  foundList.name = name;
+  await foundList.save();
+
+  res.status(200).json(foundList);
 });
 
 const listControler = {
@@ -104,6 +162,8 @@ const listControler = {
   getLists,
   deleteItem,
   updateItem,
+  deleteList,
+  updateList,
 };
 
 module.exports = listControler;
