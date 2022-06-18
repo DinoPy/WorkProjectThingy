@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --navBar: #2c2f4899;
+        --main: rgba(44, 47, 72, 0.35);
+        --input: rgba(255, 255, 255, 0.15);
+    }
+}
+
+.input {
+    @apply py-2 px-4 bg-input rounded-xl text-white placeholder:text-white border-0;
+}
+
+.button {
+    @apply py-[0.5em] px-[1.5em] border border-slate-100 rounded-xl transition hover:scale-105  hover:shadow-md hover:shadow-slate-200;
+}
+
+.border-bottom {
+    @apply border-slate-100 border-opacity-20 border-b-2;
+}
+
+.scroll-feature::-webkit-scrollbar {
+    width: 10px;
+}
+
+body {
+    @apply bg-gradient relative;
+}
+
+/* body::after {
+    @apply absolute top-0 left-0 bottom-0 right-0 bg-gray bg-opacity-10 min-h-screen;
+    content: '';
+    z-index: -1;
+} */
