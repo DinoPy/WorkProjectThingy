@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { Spinner } from '@syncfusion/ej2-react-popups';
 
 const Joke = () => {
     const [joke, setJoke] = React.useState({});

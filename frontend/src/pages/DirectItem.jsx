@@ -15,6 +15,7 @@ import Spinner from '../components/Spinner';
 import userSlice from '../features/users/userSlice';
 import Header from '../components/Header';
 import EditMode from '../components/EditMode';
+import LineChart from '../components/LineChart';
 
 const DirectItem = () => {
     const params = useParams();
@@ -83,7 +84,7 @@ const DirectItem = () => {
         <div className='   p-6'>
             <Header />
             {/* TITLE + DESCRIPTION   && toggle edit*/}
-            <div className='my-20 borde'>
+            <div className='my-20'>
                 <div
                     className={` flex justify-between items-center ${
                         listItem.description ? '' : 'border-b-2 pb-4 '
@@ -130,9 +131,7 @@ const DirectItem = () => {
                     name='itemAddInput'
                     required={true}
                 />
-                <button className=' button ml-4 bg-red-300 hover:shadow-inner hover:shadow-red-200 transition-all'>
-                    Add Item
-                </button>
+                <button className=' button ml-10'>Add Item</button>
             </form>
 
             {groupedDates() &&

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@syncfusion/ej2-react-charts": "^20.1.59",
     "@tailwindcss/forms": "^0.5.2",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",

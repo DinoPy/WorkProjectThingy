@@ -10,6 +10,7 @@ import {
     listReset,
 } from '../features/lists/listsSlice';
 import Spinner from './Spinner';
+import LineChart from './LineChart';
 
 const List = (props) => {
     const [listTitleInput, setListTitleInput] = React.useState('');
@@ -88,7 +89,7 @@ const List = (props) => {
                 <button className='  button ml-10 '> Add List</button>
             </form>
 
-            {lists?.map((list) => (
+            {/* {lists?.map((list) => (
                 <div className='my-10 border-b pb-4' key={list._id}>
                     <h2 className='text-2xl font-bold pb-6'>{list.name}</h2>
                     <form onSubmit={(e) => onItemSubmitHandler(e, list._id)}>
@@ -110,7 +111,8 @@ const List = (props) => {
                         ))}
                     </ul>
                 </div>
-            ))}
+            ))} */}
+            <LineChart lists={lists} />
         </div>
     );
 };
