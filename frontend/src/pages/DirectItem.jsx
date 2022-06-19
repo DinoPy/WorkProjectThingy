@@ -23,6 +23,7 @@ const DirectItem = () => {
 
     const [inputField, setInputField] = React.useState('');
     const [editMode, setEditMode] = React.useState(false);
+
     const listItem =
         useSelector(
             (state) =>
@@ -76,6 +77,13 @@ const DirectItem = () => {
             return groupedData;
         }, {});
 
+    React.useEffect(()=> {
+      return () => {
+        setEditMode(false)
+      }
+    },[params])
+
+  
     if (isLoading) {
         return <Spinner />;
     }

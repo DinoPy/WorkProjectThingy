@@ -18,8 +18,8 @@ const Joke = () => {
                 Click me for a joke
             </button>
             <div className='text-sm'>
-                <p>{joke.setup}</p>
-                <p>{joke.delivery}</p>
+                <p>{joke?.setup}</p>
+                <p>{joke?.delivery}</p>
             </div>
         </div>
     );

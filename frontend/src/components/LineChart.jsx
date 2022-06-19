@@ -8,6 +8,7 @@ import {
     Legend,
     Tooltip,
     LineSeries,
+    Category,
 } from '@syncfusion/ej2-react-charts';
 
 const LineChart = (props) => {
@@ -44,17 +45,40 @@ const LineChart = (props) => {
         };
     });
 
-    console.log(groupedDates(props.lists[0]));
+    const LinePrimaryXAxis = {
+        valueType: 'DateTime',
+        labelFormat: 'y',
+        intervalType: 'Year',
+    };
+
+    const LinePrimaryYAxis = {
+        labelFormat: '%{value}',
+        rangePadding: 'None',
+        minimum: 0,
+        maximum: 20,
+        interval: 1,
+        lineStyle: { width: 0 },
+        majorTickLines: { width: 0 },
+        minorTickLines: { width: 0 },
+    };
 
     return (
         <ChartComponent
             id='line-chart'
             height='420px'
+            primaryXAxis={{
+                valueType: 'DateTime',
+                title: 'Day',
+                labelFormat: 'MM/dd',
+            }}
+            primaryYAxis={{ valueType: 'Double', title: 'No. Errors' }}
             chartArea={{ border: { width: 0 } }}
             tooltip={{ enable: true }}
-            background={'rgba(44, 47, 72, 0.25)'}
+            background={'rgba(255, 255, 255, 0.15)'}
         >
-            <Inject services={[LineSeries, DateTime, Legend, Tooltip]} />
+            <Inject
+                services={[LineSeries, DateTime, Legend, Tooltip, Category]}
+            />
             <SeriesCollectionDirective>
                 {data?.map((item, index) => (
                     <SeriesDirective id={index} {...item} />

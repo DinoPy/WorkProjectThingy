@@ -6,7 +6,9 @@ import App from './App';
 import './index.css';
 import config from './config.json';
 import { registerLicense } from '@syncfusion/ej2-base';
-registerLicense(config.syncfusionLicense);
+registerLicense(
+    'ORg4AjUWIQA/Gnt2VVhhQlFacF9JXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRdkNiUH9Zcn1QQ2ZbVkE='
+);
 
 const container = document.getElementById('root');
 const root = createRoot(container);
