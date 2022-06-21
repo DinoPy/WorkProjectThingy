@@ -7,6 +7,7 @@
     "@reduxjs/toolkit": "^1.8.2",
     "@syncfusion/ej2": "^20.1.59",
     "@syncfusion/ej2-base": "^20.1.57",
+    "@syncfusion/ej2-react-charts": "^20.1.59",
     "@syncfusion/ej2-react-popups": "^20.1.58",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
