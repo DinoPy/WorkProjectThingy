@@ -9,7 +9,7 @@ import { registerLicense } from '@syncfusion/ej2-base';
 
 // Registering Syncfusion license key
 registerLicense(
-    'ORg4AjUWIQA/Gnt2VVhhQlFacF9JXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRdkNiUH5ecHZQQWJbUkI='
+    'removed'
 );
 
 const container = document.getElementById('root');
